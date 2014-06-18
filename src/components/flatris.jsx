@@ -30,6 +30,14 @@ Cosmos.components.Flatris = React.createClass({
         onTetriminoLanding: this.onTetriminoLanding,
         onFullWell: this.onFullWell
       };
+    },
+    infoPanel: function() {
+      if (this.state.playing && !this.state.paused) {
+        return;
+      }
+      return {
+        component: 'InfoPanel'
+      };
     }
   },
   start: function() {
@@ -58,7 +66,20 @@ Cosmos.components.Flatris = React.createClass({
     return (
       <div className="flatris">
         {this.loadChild('well')}
+        {this.loadChild('infoPanel')}
         {Cosmos(this.getGamePanelProps())}
+        <div className="controls">
+          {React.DOM.button(
+            Flatris.attachPointerDownEvent(this.onRotatePress), '↻')}
+          {React.DOM.button(
+            Flatris.attachPointerDownEvent(this.onLeftPress), '←')}
+          {React.DOM.button(
+            Flatris.attachPointerDownEvent(this.onRightPress), '→')}
+          {React.DOM.button(
+            _.extend(
+              Flatris.attachPointerDownEvent(this.onPullPress),
+              Flatris.attachPointerUpEvent(this.onPullRelease)), '↓')}
+        </div>
       </div>
     );
   },
@@ -88,7 +109,7 @@ Cosmos.components.Flatris = React.createClass({
     if (_.values(Flatris.KEYS).indexOf(e.keyCode) != -1) {
       e.preventDefault();
     }
-    // Ignore key events when game is stopped or paused
+    // Ignore user events when game is stopped or paused
     if (!this.state.playing || this.state.paused) {
       return;
     }
@@ -107,13 +128,53 @@ Cosmos.components.Flatris = React.createClass({
     }
   },
   onKeyUp: function(e) {
-    // Ignore key events when game is stopped or paused
+    // Ignore user events when game is stopped or paused
     if (!this.state.playing || this.state.paused) {
       return;
     }
     if (e.keyCode == Flatris.KEYS.DOWN) {
       this.refs.well.setState({dropAcceleration: false});
     }
+  },
+  onRotatePress: function(e) {
+    // Ignore user events when game is stopped or paused
+    if (!this.state.playing || this.state.paused) {
+      return;
+    }
+    e.preventDefault();
+    this.refs.well.rotateTetrimino();
+  },
+  onLeftPress: function(e) {
+    // Ignore user events when game is stopped or paused
+    if (!this.state.playing || this.state.paused) {
+      return;
+    }
+    e.preventDefault();
+    this.refs.well.moveTetriminoToLeft();
+  },
+  onRightPress: function(e) {
+    // Ignore user events when game is stopped or paused
+    if (!this.state.playing || this.state.paused) {
+      return;
+    }
+    e.preventDefault();
+    this.refs.well.moveTetriminoToRight();
+  },
+  onPullPress: function(e) {
+    // Ignore user events when game is stopped or paused
+    if (!this.state.playing || this.state.paused) {
+      return;
+    }
+    e.preventDefault();
+    this.refs.well.setState({dropAcceleration: true});
+  },
+  onPullRelease: function(e) {
+    // Ignore user events when game is stopped or paused
+    if (!this.state.playing || this.state.paused) {
+      return;
+    }
+    e.preventDefault();
+    this.refs.well.setState({dropAcceleration: false});
   },
   onTetriminoLanding: function(drop) {
     // Stop inserting Tetriminos and awarding bonuses after game is over
