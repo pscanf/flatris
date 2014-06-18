@@ -2,17 +2,26 @@
   margin: 0;
   padding: 0;
 }
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
 body {
   background: #fff;
   color: #34495f;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
+  /* Flatris can't get out of viewport bounds */
+  min-width: 480px;
+  min-height: 680px;
 }
 ul {
   list-style-type: none;
 }
 p {
   margin: 15px 0;
+  line-height: 20px;
 }
 a {
   color: #34495f;
@@ -22,27 +31,61 @@ a {
 a:hover {
   text-decoration: underline;
 }
+button {
+  display: block;
+  border: 0;
+  height: 60px;
+  background: #34495f;
+  color: #fff;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 60px;
+  outline: none;
+  cursor: pointer;
+}
 
-/* Flatris expects a 480x600px viewport */
+#content {
+  width: 100%;
+  height: 100%;
+}
+/* Flatris expects a 480 width viewport */
 .flatris {
   position: relative;
+  top: 50%;
+  left: 50%;
   width: 480px;
-  height: 600px;
-  font-weight: 300;
+  height: 680px;
+  margin: -340px 0 0 -240px;
 }
 .flatris .well {
   position: absolute;
   top: 0;
   left: 0;
   width: 300px;
+  height: 600px;
   background: #ecf0f1;
+}
+.flatris .info-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 270px;
+  height: 600px;
+  padding: 0 15px;
+  background: rgba(236, 240, 241, 0.8);
+}
+.flatris .info-panel .headline {
+  margin-bottom: 30px;
+  font-size: 18px;
+  line-height: 26px;
 }
 .flatris .game-panel {
   position: absolute;
   top: 0;
+  bottom: 80px;
+  left: 300px;
   right: 0;
-  width: 120px;
-  height: 100%;
   padding: 0 30px;
 }
 .flatris .game-panel p {
@@ -58,6 +101,7 @@ a:hover {
 .flatris .game-panel .label {
   margin: 30px 0 0 0;
   color: #bdc3c7;
+  font-weight: 300;
 }
 .flatris .game-panel .count {
   margin: 5px 0 0 0;
@@ -84,23 +128,34 @@ a:hover {
   bottom: 30px;
   left: 30px;
   right: 30px;
-  display: block;
   width: 120px;
-  height: 30px;
-  padding: 0 10px;
-  border: 0;
-  background: #34495f;
-  color: #fff;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 30px;
-  outline: none;
+}
+.flatris .controls {
+  position: absolute;
+  top: 600px;
+  left: 0;
+  height: 80px;
+}
+.flatris .controls button {
+  float: left;
+  width: 60px;
+  margin: 20px 20px 0 0;
+  background: #ecf0f1;
+  color: #34495f;
+  font-size: 24px;
 }
 
 .square-block {
   width: 100%;
   height: 100%;
+}
+/* Square blocks will transition their "fall" when lines are cleared
+beneath them */
+.grid-square-block {
+  position: absolute;
+  -webkit-transition: top 0.1s linear;
+  -moz-transition: top 0.1s linear;
+  transition: top 0.1s linear;
 }
 
 .tetrimino {
@@ -118,19 +173,11 @@ a:hover {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  /* Square blocks will transition their "fall" when lines are cleared
-  beneath them */
 }
 .well .well-grid {
   position: relative;
   width: 100%;
   height: 100%;
-}
-.well .grid-square-block {
-  position: absolute;
-  -webkit-transition: top 0.1s linear;
-  -moz-transition: top 0.1s linear;
-  transition: top 0.1s linear;
 }
 .well .active-tetrimino {
   position: absolute;
