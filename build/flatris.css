@@ -106,7 +106,7 @@ button {
   /* Override any color the next Tetrimino has for a gray shape */
   background-color: #ecf0f1 !important;
 }
-.flatris .game-panel .next-tetrimino .flatris .game-panel .next-tetrimino-I {
+.flatris .game-panel .next-tetrimino.next-tetrimino-I {
   margin-top: -20px;
 }
 .flatris .game-panel button {
