@@ -392,7 +392,7 @@ Cosmos.components.Flatris = React.createClass({displayName: 'Flatris',
     this.setState({nextTetrimino: this.getRandomTetriminoType()});
   },
   getRandomTetriminoType: function() {
-    return _.sample(_.keys(Flatris.SHAPES));
+    return _.sample(["I", "O"]);
   }
 });
 
