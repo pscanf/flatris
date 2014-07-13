@@ -12,10 +12,7 @@ var Flatris = {
   // http://tetris.wikia.com/wiki/SRS
   SHAPES: {
     I: [
-      [0, 0, 0, 0],
-      [1, 1, 1, 1],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0]
+      [1]
     ],
     O: [
       [1, 1],
